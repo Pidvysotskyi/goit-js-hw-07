@@ -17,7 +17,23 @@ galleryRef.addEventListener("click", onGalerryClick);
 
 function onGalerryClick(event) {
   event.preventDefault();
+  const isGalleryImageEl = event.target.classList.contains("gallery__image");
+
+  if (!isGalleryImageEl) {
+    return;
+  }
   const imageUrl = event.target.dataset.source;
 
-  return imageUrl;
+  const instance = basicLightbox.create(`<img src="${imageUrl}" width="800" height="600">`);
+
+  instance.show();
+
+  window.addEventListener("keydown", onEscPush);
+
+  function onEscPush(event) {
+    if (event.code !== "Escape") {
+      return;
+    }
+    instance.close();
+  }
 }
